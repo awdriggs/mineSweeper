@@ -1,0 +1,16 @@
+body{
+	
+}
+
+#wrapper{
+	max-width: 1000px;
+}
+
+.cell{
+	box-sizing: border-box;
+	display: inline-block;
+	width:100px;
+	height:100px;
+	background-color: #eee;
+	border: 1px solid white;
+}
