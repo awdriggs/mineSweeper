@@ -11,15 +11,28 @@ var Cell = function(row, col){
 	this.hidden = true;
 	this.row = row;
 	this.col = col;
-	this.danger = 0;
+	this.danger = 0; //remain unset until actually clicked?
 }
+
+
+
 
 var Grid = function(size){
 	this.size = size;
 	this.grid = [];
 
-	this.setMine(); //call the set mine function to randomly assign a mine
+	//
 }
+
+Grid.prototype.getDanger = function(first_argument) {
+	if(this.hasMine){
+		alert('boom');
+	} else {
+		//check the neighbors
+		
+	}
+
+};
 
 Grid.prototype.build = function() {
 	for(var i = 0; i < this.size; i++){
@@ -57,30 +70,49 @@ Grid.prototype.setListen = function(first_argument) {
 	var gridArray = document.getElementsByClassName('cell');
 	
 	for(var i = 0; i < gridArray.length; i++){
-		gridArray[i].addEventListener('click', clicked);
+		gridArray[i].addEventListener('click', function(e){
+			debugger;
+			clicked(e, this); //not working, start here!!!!!
+		});
 	};
 };
 
 Grid.prototype.setMine = function(numMines) {
+	var amt = numMines;
+
+	for(var i = 0; i < amt; i++){
+		// debugger;
+		//select a random x,y coord
+		x = Math.floor(Math.random(0)*this.size);
+		y = Math.floor(Math.random(0)*this.size);
+
+
+		console.log('secret ', x, y);
+
+		//give the cell at the current coord a mine
+		this.grid[x][y].hasMine = true;
+		//debugger;
+
+	}
+
 	console.log('mine set!');
 }
 
 //game functions?
-var clicked = function(e){
+var clicked = function(e, grid){
 	//alert(e.target.id);
-	var coord = {
-		x:e.target.id.split('-')[0],
-		y:e.target.id.split('-')[1]
-	}
+	var gridObj = grid;
+	//coord is the x,y pair
+	var coord = e.target.id.split('-')
 
 	//add logic here for calling the check mine.
 
-	console.log(test.grid[coord.x][coord.y].hasMine);
-	console.log(this)
-	// debugger;
+	//console.log(test.grid[coord[0]][coord[1]].hasMine);
+	//console.log(this)
+	debugger;
+	//test.getDanger(coord[0], coord[1]);
+	//return(coord);
 }
-
-
 
 //grid object
 //size, must be a square number
@@ -99,5 +131,5 @@ var clicked = function(e){
 var test = new Grid(10);
 
 test.build();
-
+test.setMine(3); //call the set mine function to randomly assign a mine
 
