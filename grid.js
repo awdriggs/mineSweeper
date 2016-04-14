@@ -1,4 +1,4 @@
-
+//refactoring
 var Grid = function(size){
 	this.size = size;
 	this.grid = [];
