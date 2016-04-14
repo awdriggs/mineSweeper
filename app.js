@@ -1,63 +1,34 @@
 
 window.onload = function(){
-	test.render();
-	test.setListen();
+	render(size);
+	setListener();
 }
+//app
+
+//create a new game with a size value
+
+//render the game board
+
+//set listeners
+
+//
 
 
-//cell object
-var Cell = function(row, col){
-	this.hasMine = false;
-	this.hidden = true;
-	this.row = row;
-	this.col = col;
-	this.danger = 0; //remain unset until actually clicked?
-}
-
-
-
-
-var Grid = function(size){
-	this.size = size;
-	this.grid = [];
-
-	//
-}
-
-Grid.prototype.getDanger = function(first_argument) {
-	if(this.hasMine){
-		alert('boom');
-	} else {
-		//check the neighbors
-		
-	}
-
-};
-
-Grid.prototype.build = function() {
-	for(var i = 0; i < this.size; i++){
-		var row = [];
-		for(var j = 0; j < this.size; j++){
-			row.push(new Cell(i,j));
-		}
-		this.grid.push(row);
-	}
-};
-
-Grid.prototype.render = function() {
+//move this to be a app function...no game logic anyhwo
+render = function(size) {
 	//nested for loop to go through the grid, build to dom
 	var wrapper = document.getElementById('wrapper');
 
-	for(var i = 0; i < this.grid.length; i++){
+	for(var i = 0; i < size; i++){
 		var row = document.createElement('div');
 		//row.innerHTML = i + ':'; //remove later
 		
-		for(var j = 0; j < this.grid.length; j++){
+		for(var j = 0; j < size; j++){
 			var cell = document.createElement('div');
 			//console.log("i:" + i + " j:" + j);
 			//apply the tag name of the index i and j, target this is equal to a cell index
 			cell.id = i + "-" + j;
-			// cell.innerHTML = i + " " + j;
+			cell.innerHTML = test.grid[i][j].danger;
 			cell.className = 'cell';
 			//debugger;
 			row.appendChild(cell);
@@ -66,52 +37,32 @@ Grid.prototype.render = function() {
 	}
 };
 
-Grid.prototype.setListen = function(first_argument) {
+//app function
+setListener = function(first_argument) {
 	var gridArray = document.getElementsByClassName('cell');
 	
 	for(var i = 0; i < gridArray.length; i++){
-		gridArray[i].addEventListener('click', function(e){
-			debugger;
-			clicked(e, this); //not working, start here!!!!!
-		});
+		gridArray[i].addEventListener('click', clicked);
 	};
 };
 
-Grid.prototype.setMine = function(numMines) {
-	var amt = numMines;
-
-	for(var i = 0; i < amt; i++){
-		// debugger;
-		//select a random x,y coord
-		x = Math.floor(Math.random(0)*this.size);
-		y = Math.floor(Math.random(0)*this.size);
-
-
-		console.log('secret ', x, y);
-
-		//give the cell at the current coord a mine
-		this.grid[x][y].hasMine = true;
-		//debugger;
-
-	}
-
-	console.log('mine set!');
-}
 
 //game functions?
-var clicked = function(e, grid){
+var clicked = function(e){
 	//alert(e.target.id);
-	var gridObj = grid;
+	
 	//coord is the x,y pair
 	var coord = e.target.id.split('-')
 
 	//add logic here for calling the check mine.
 
-	//console.log(test.grid[coord[0]][coord[1]].hasMine);
-	//console.log(this)
-	debugger;
-	//test.getDanger(coord[0], coord[1]);
+	console.log(test.grid[coord[0]][coord[1]].hasMine);
+	console.log(this)
+	
+	test.getDanger(coord[0], coord[1]);
 	//return(coord);
+
+	//do something here
 }
 
 //grid object
@@ -127,9 +78,9 @@ var clicked = function(e, grid){
 
 //grid check
 //g
-
-var test = new Grid(10);
+var size = 10;
+var test = new Grid(size);
 
 test.build();
-test.setMine(3); //call the set mine function to randomly assign a mine
-
+test.setMine(10); //call the set mine function to randomly assign a mine
+test.setDanger();
