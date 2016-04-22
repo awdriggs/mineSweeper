@@ -1,4 +1,3 @@
-//refactoring
 var Grid = function(size){
 	this.size = size;
 	this.grid = [];
@@ -33,23 +32,19 @@ Grid.prototype.setMine = function(numMines) {
 	var amt = numMines;
 
 	for(var i = 0; i < amt; i++){
-		// debugger;
 		//select a random x,y coord
 		x = Math.floor(Math.random(0)*this.size);
 		y = Math.floor(Math.random(0)*this.size);
 
-
 		console.log('secret ', x, y);
+		//BUG! insert check to see that mine is unique, put in a while loop?
 		this.mines.push([x,y]);
 		//give the cell at the current coord a mine
 		this.grid[x][y].hasMine = true;
 		this.grid[x][y].danger = 10;
-		//debugger;
-		//maybe store and return the mines in an array? useful elsewhere?
-
 	}
-	console.log(this.mines)
-	console.log('mine set!');
+
+	console.log('mines set!');
 }
 
 Grid.prototype.setDanger = function(){
@@ -75,9 +70,7 @@ Grid.prototype.setNeigbhors = function(x, y, range){
 		}//end y loop			
 	}//end x loop
 
-	//BUG if a safe cell is sandwiched by two mines, it will incorrectly read that it is touching 3 bombs
-	//this is because i'm setting the mines around the cells and not checking the cells around the mines
-	//you could refactor to only get the danger when a cell is revealed. same edge casing would apply.
+	//BUG correction, bug was because mines were being doubled
 }
 
 Grid.prototype.isCell = function(x, y){

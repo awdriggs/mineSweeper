@@ -1,16 +1,49 @@
 body{
+	font-family: 'Muli', sans-serif;
 	
 }
 
 #wrapper{
-	max-width: 1000px;
+	margin: 0 auto;
+	max-width: 600px;
 }
 
 .cell{
 	box-sizing: border-box;
 	display: inline-block;
-	width:100px;
-	height:100px;
-	background-color: #eee;
+	width: 20px;
+	height: 20px;
+	background-color: #ddd;
 	border: 1px solid white;
+	text-align: center;
+
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.visible{
+	background-color: #eee;
+}
+
+.red{
+	background-color: #f0abab;
+	color: #d92a29;
+}
+
+.green{
+	background-color: #8bd9b0;
+	color: #339863;
+}
+
+.yellow{
+	background-color: #ffec9d;
+	color: #f2c200;
+}
+
+.orange{
+	background-color: #ffb479;
+	color: #ff7102;
 }

@@ -1,7 +1,13 @@
+var size = 30;
+var mines = 100;
+var game = null;
 
 window.onload = function(){
+	game = new Game(size, mines);
+
 	render(size);
 	setListener();
+	
 }
 //app
 
@@ -25,10 +31,9 @@ render = function(size) {
 		
 		for(var j = 0; j < size; j++){
 			var cell = document.createElement('div');
-			//console.log("i:" + i + " j:" + j);
 			//apply the tag name of the index i and j, target this is equal to a cell index
 			cell.id = i + "-" + j;
-			cell.innerHTML = test.grid[i][j].danger;
+			cell.innerHTML = '&#8203';
 			cell.className = 'cell';
 			//debugger;
 			row.appendChild(cell);
@@ -38,7 +43,7 @@ render = function(size) {
 };
 
 //app function
-setListener = function(first_argument) {
+setListener = function() {
 	var gridArray = document.getElementsByClassName('cell');
 	
 	for(var i = 0; i < gridArray.length; i++){
@@ -46,41 +51,97 @@ setListener = function(first_argument) {
 	};
 };
 
-
-//game functions?
-var clicked = function(e){
-	//alert(e.target.id);
+removeListener = function(){
+	var gridArray = document.getElementsByClassName('cell');
 	
-	//coord is the x,y pair
-	var coord = e.target.id.split('-')
+	for(var i = 0; i < gridArray.length; i++){
 
-	//add logic here for calling the check mine.
-
-	console.log(test.grid[coord[0]][coord[1]].hasMine);
-	console.log(this)
-	
-	test.getDanger(coord[0], coord[1]);
-	//return(coord);
-
-	//do something here
+		gridArray[i].removeEventListener('click', clicked);
+	};
 }
 
-//grid object
-//size, must be a square number
+var clicked = function(e){
+	//alert(e.target.id);
+	console.log('clicked')
+	//coord is the x,y pair
+	//console.log(e.shiftKey);
+	var coord = e.target.id.split('-')
+	var x = parseInt(coord[0]); //these are strings, should be parsed
+	var y = parseInt(coord[1]);
+	
+	if(game.isMine(x, y)){
+		gameOver();
+	}else if(e.shiftKey){
+		var mine = document.getElementById(x + '-' + y);
+		mine.innerHTML = '&#10006';
 
-//build grid
-//use the size to build an array of rows and columns
+	} else {
+		game.check(x, y);
+		update(); //does this need to be a callback to handle async?
+	};
+}
 
-//render, function, go through the grid array
+var gameOver = function(){
+	game.over = true;
+	//remove the event listeners
+	removeListener();
 
-//set danger, iterate through the cells, get them to set the danger
-//get danger, get the danger of cells
+	//loop over mines, set to visible, set characther to &#9883
+	var mines = game.board.mines;
+	
+	for(var i = 0; i < mines.length; i++){
+		var x = mines[i][0];
+		var y = mines[i][1];
 
-//grid check
-//g
-var size = 10;
-var test = new Grid(size);
+		var mine = document.getElementById(x + '-' + y);
+		//mine.classList.add('bomb');
+		mine.innerHTML = '&#9679'
+	}
+	
+	//reload the game	
+}
 
-test.build();
-test.setMine(10); //call the set mine function to randomly assign a mine
-test.setDanger();
+var update = function(){
+	console.log('time to update the displays')
+	//loop through all the dom boxes
+	var cells = document.getElementsByClassName('cell')
+	
+	for(var i = 0; i < cells.length; i++){
+		
+		var coord = cells[i].id.split('-')
+		
+		var x = coord[0];
+		var y = coord[1];
+
+		var cell = game.board.grid[x][y]
+		var visible = cell.visible;
+		
+		if(visible){
+			cells[i].classList.add('visible');
+			
+			if(cell.danger){
+				cells[i].innerHTML = cell.danger;
+				cells[i].classList.add(findColor(cell.danger));
+			}
+		}
+	}
+}
+
+var findColor = function(danger){
+	var className;
+
+	if(danger == 1){
+		className = 'green';
+	} else if(danger == 2){
+		className = 'yellow';
+	} else if(danger == 3){
+		className = 'orange';
+	} else if(danger > 3){
+		className = 'red';
+	}
+
+	return className;
+}
+
+
+
