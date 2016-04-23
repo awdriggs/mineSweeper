@@ -20,7 +20,7 @@ window.onload = function(){
 //
 
 
-//move this to be a app function...no game logic anyhwo
+//move this to be a app function...no game logic anyhwow
 render = function(size) {
 	//nested for loop to go through the grid, build to dom
 	var wrapper = document.getElementById('wrapper');
@@ -55,29 +55,26 @@ removeListener = function(){
 	var gridArray = document.getElementsByClassName('cell');
 	
 	for(var i = 0; i < gridArray.length; i++){
-
 		gridArray[i].removeEventListener('click', clicked);
 	};
 }
 
 var clicked = function(e){
-	//alert(e.target.id);
-	console.log('clicked')
 	//coord is the x,y pair
-	//console.log(e.shiftKey);
 	var coord = e.target.id.split('-')
 	var x = parseInt(coord[0]); //these are strings, should be parsed
 	var y = parseInt(coord[1]);
 	
-	if(game.isMine(x, y)){
+	if(e.shiftKey){
+		//set flag
+		var flag = document.getElementById(x + '-' + y);
+		toggleFlag(flag);
+	}else if(game.isMine(x, y)){
 		gameOver();
-	}else if(e.shiftKey){
-		var mine = document.getElementById(x + '-' + y);
-		mine.innerHTML = '&#10006';
-
-	} else {
+	}else {
 		game.check(x, y);
 		update(); //does this need to be a callback to handle async?
+
 	};
 }
 
@@ -143,5 +140,29 @@ var findColor = function(danger){
 	return className;
 }
 
+//this isn't working, the innerhtml returns the x instead of the unicode
+//maybe use a css rule instead
+var toggleFlag = function(cell){
+	var flagged = false
+	debugger;
+	console.log(cell.innerHTML)
+	if(cell.innerHTML == '&#10006'){
+		debugger;
+		cell.innerHTML = '';
+		flagged = false;
+	}else{
+		cell.innerHTML = '&#10006';	
+		flagged = true;
+	}
+	return flagged;
+}
+
+//updateScore
+//target the scoreboard
+//call the game.getScore to get the current score
+//set the score to the current score
+
+//check win!
+//if the 
 
 

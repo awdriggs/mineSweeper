@@ -1,5 +1,4 @@
 
-
 var Game = function(size, mines){
 	//this.size = size;
 	this.board = new Grid(size);
@@ -7,6 +6,8 @@ var Game = function(size, mines){
 	this.board.setMine(mines); //call the set mine function to randomly assign a mine
 	this.board.setDanger();
 	this.over = false;
+	this.score = 0; //later, use this to check for win
+	this.winningScore = size*size;
 }
 
 //does this need to include a callback and a .done structure?
@@ -54,3 +55,11 @@ Game.prototype.isThere = function(x, y){
 	//pass true if both exist
 	return this.board.grid[x] && this.board.grid[x][y];
 }
+
+Game.prototype.getScore = function(){
+	//set score equal to the grid countVisible result
+	this.score = this.board.countVisible();
+	return this.score
+}
+
+Game.prototype.checkWin

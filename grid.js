@@ -70,7 +70,7 @@ Grid.prototype.setNeigbhors = function(x, y, range){
 		}//end y loop			
 	}//end x loop
 
-	//BUG correction, bug was because mines were being doubled
+	//BUG correction, bug was because mines were being doubled, still needs a fix
 }
 
 Grid.prototype.isCell = function(x, y){
@@ -78,4 +78,22 @@ Grid.prototype.isCell = function(x, y){
 	//then check to see if the cell exists
 	//pass true if both exist
 	return this.grid[x] && this.grid[x][y];
+}
+
+Grid.prototype.countVisible = function(){
+	
+	//loop through the grid, use a counter
+	//if the cell is visible, inc the counter
+	//used for calculating a win.
+	var count = 0;
+
+	for(var i = 0; i < this.grid.length; i++){
+		
+		for(var j = 0; j < this.grid[i].length; j++){
+			if(this.grid[i][j].visible){
+				count++;
+			}	
+		}
+	}
+	return count;
 }
