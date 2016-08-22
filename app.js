@@ -140,18 +140,18 @@ var findColor = function(danger){
 	return className;
 }
 
-//this isn't working, the innerhtml returns the x instead of the unicode
-//maybe use a css rule instead
+//called when user shift clicks, toggle the flag
 var toggleFlag = function(cell){
 	var flagged = false
-	debugger;
 	console.log(cell.innerHTML)
-	if(cell.innerHTML == '&#10006'){
-		debugger;
-		cell.innerHTML = '';
+
+	if(cell.classList.contains("flag")){
+	  cell.classList.remove("flag");	
+		cell.innerHTML = '&#8203';
 		flagged = false;
 	}else{
 		cell.innerHTML = '&#10006';	
+    cell.classList.add("flag");
 		flagged = true;
 	}
 	return flagged;
