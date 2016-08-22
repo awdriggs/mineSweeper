@@ -30,11 +30,22 @@ Grid.prototype.build = function() {
 
 Grid.prototype.setMine = function(numMines) {
 	var amt = numMines;
-
+// generate a random number
+  // check to see if that already exists as a mine
+  // if yes, redo
+  // if no, make a mine
 	for(var i = 0; i < amt; i++){
 		//select a random x,y coord
-		x = Math.floor(Math.random(0)*this.size);
-		y = Math.floor(Math.random(0)*this.size);
+		var x = Math.floor(Math.random(0)*this.size);
+		var y = Math.floor(Math.random(0)*this.size);
+    
+    while(this.grid[x][y].hasMine == true){
+  	//quick check to see if there is already a mine there, if so, reset the
+    //randoms, will this case an ifinite loop?
+      
+      x = Math.floor(Math.random(0)*this.size);
+		  y = Math.floor(Math.random(0)*this.size);
+    }
 
 		console.log('secret ', x, y);
 		//BUG! insert check to see that mine is unique, put in a while loop?
