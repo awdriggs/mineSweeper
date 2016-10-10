@@ -13,7 +13,7 @@ var start = function(){
 	setListener();
   setReset();
   
-  var setTitle = document.getElementById('titleBar').innerHTML = '<h1 id="title" class="iblock">mineSweep</h1>';
+  var setTitle = document.getElementById('titleBar').innerHTML = '<h1 id="title" class="iblock">mineSweeper</h1>';
   var showMines = document.getElementById('mines').innerHTML = 'Mines: ' + mines;
   
   updateScore();
