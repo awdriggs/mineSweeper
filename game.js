@@ -7,7 +7,8 @@ var Game = function(size, mines){
 	this.board.setDanger();
 	this.over = false;
 	this.score = 0; //later, use this to check for win
-	this.winningScore = size*size;
+	this.winningScore = size*size - mines;
+  this.win = false; //change to true if there is a win!
 }
 
 //does this need to include a callback and a .done structure?
@@ -17,9 +18,11 @@ Game.prototype.check = function(x, y) {
 	clickedCell.visible = true;
 
 	if(clickedCell.danger == 0){
-		//call check on neighbors!
+		//call check on neighbors! 
 		this.checkNeigbhors(x, y, 1);
 	}
+
+  this.getScore();
 };
 
 Game.prototype.isMine = function(x, y){
@@ -47,6 +50,8 @@ Game.prototype.checkNeigbhors = function(x, y, range){
 			}
 		}//end y loop			
 	}//end x loop
+
+  this.getScore();
 }
 
 Game.prototype.isThere = function(x, y){
@@ -62,4 +67,10 @@ Game.prototype.getScore = function(){
 	return this.score
 }
 
-Game.prototype.checkWin
+Game.prototype.checkWin = function(){
+  if(this.score == this.winningScore){
+    console.log('player wins')
+    this.win = true;
+  }
+  return this.win;
+}

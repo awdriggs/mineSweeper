@@ -47,8 +47,7 @@ Grid.prototype.setMine = function(numMines) {
 		  y = Math.floor(Math.random(0)*this.size);
     }
 
-		console.log('secret ', x, y);
-		//BUG! insert check to see that mine is unique, put in a while loop?
+		//console.log('secret ', x, y);
 		this.mines.push([x,y]);
 		//give the cell at the current coord a mine
 		this.grid[x][y].hasMine = true;

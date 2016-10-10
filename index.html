@@ -1,15 +1,35 @@
 <html>
+
 <head>
-	<title>mineSweep</title>
-	<script type="text/javascript" src='cell.js'></script>
-	<script type="text/javascript" src='grid.js'></script>
-	<script type="text/javascript" src='game.js'></script>
-	<script type="text/javascript" src='app.js'></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+  <title>mineSweep</title>
+  <script type="text/javascript" src='cell.js'></script>
+  <script type="text/javascript" src='grid.js'></script>
+  <script type="text/javascript" src='game.js'></script>
+  <script type="text/javascript" src='app.js'></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
-	<div id='wrapper'></div>
+  <div id='wrapper'>
+    <header>
+      <div id="titleBar" class="iblock">
+        <h1 id="title" class="iblock">mineSweep</h1>
+      </div>
+      <div id="scoreboard" class="iblock fright">
+        <div id="mines" class="iblock">
+          Mines: 0
+        </div>
+        <div id="score" class="iblock">
+          Score: 0
+        </div>
+      </div>
+    </header>
+    <div id='board'>
+    </div>
+    <p>shift click to set a flag</p>
+  </div>
 
 </body>
+
 </html>
